@@ -1,0 +1,33 @@
+app:
+  environment: dev
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gymfactory
+
+  datasource:
+    url: jdbc:h2:mem:gymdb;
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
