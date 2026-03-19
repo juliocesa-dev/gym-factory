@@ -2,14 +2,15 @@ package com.gfc.gymfactory.services;
 
 import com.gfc.gymfactory.config.security.SecurityUtils;
 import com.gfc.gymfactory.domain.entities.User;
-import com.gfc.gymfactory.domain.enums.Role;
 import com.gfc.gymfactory.dtos.request.LoginRequest;
 import com.gfc.gymfactory.dtos.request.RegisterRequest;
 import com.gfc.gymfactory.dtos.response.AuthResponse;
 import com.gfc.gymfactory.dtos.response.UserResponse;
 import com.gfc.gymfactory.exception.ApiException;
+import com.gfc.gymfactory.factories.UserFactory;
 import com.gfc.gymfactory.mappers.UserMapper;
 import com.gfc.gymfactory.repositories.UserRepository;
+import com.gfc.gymfactory.validators.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,19 +24,13 @@ public class AuthService {
     private final SecurityUtils securityUtils;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final UserFactory userFactory;
+    private final UserValidator userValidator;
 
     public AuthResponse register(RegisterRequest request) {
-        if (userRepository.existsByEmail(request.email())) {
-            throw new ApiException("Email já cadastrado", HttpStatus.CONFLICT);
-        }
+        userValidator.throwIfEmailExists(request.email());
 
-        User user = User.builder()
-                .name(request.name())
-                .email(request.email())
-                .password(passwordEncoder.encode(request.password()))
-                .phoneNumber(request.phoneNumber())
-                .role(Role.STUDENT)
-                .build();
+        User user = userFactory.createForRegister(request);
 
         userRepository.save(user);
 
@@ -43,17 +38,9 @@ public class AuthService {
     }
 
     public UserResponse registerInstructor(RegisterRequest request) {
-        if (userRepository.existsByEmail(request.email())) {
-            throw new ApiException("Email já cadastrado", HttpStatus.CONFLICT);
-        }
+        userValidator.throwIfEmailExists(request.email());
 
-        User user = User.builder()
-                .name(request.name())
-                .email(request.email())
-                .password(passwordEncoder.encode(request.password()))
-                .phoneNumber(request.phoneNumber())
-                .role(Role.INSTRUCTOR)
-                .build();
+        User user = userFactory.createForInstructorRegister(request);
 
         userRepository.save(user);
 
