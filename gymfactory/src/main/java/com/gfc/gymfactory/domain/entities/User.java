@@ -18,7 +18,7 @@ public class User extends BaseEntityUUID {
     @Column(nullable = false)
     private String name;
 
-    @Column(unique = true)
+    @Column
     private String phoneNumber;
 
     @Column(nullable = false, unique = true)

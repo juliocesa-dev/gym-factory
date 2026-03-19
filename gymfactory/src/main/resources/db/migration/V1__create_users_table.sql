@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY,
     name VARCHAR(120) NOT NULL,
-    phone_number VARCHAR(20) UNIQUE,
+    phone_number VARCHAR(20),
     email VARCHAR(120) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     role VARCHAR(50),
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS users (
         'Admin',
         '81993952117',
         'admin@gymfactory.com',
-        '$2a$10$EXAMPLEHASHEDPASSWORD',
+        '$2a$10$oBlBh4rNuviFGU5Vh4LiVOYy2adubHCySEj0qyuVGY/nOmDCSOlia',
         'ADMIN',
         true,
         false,
