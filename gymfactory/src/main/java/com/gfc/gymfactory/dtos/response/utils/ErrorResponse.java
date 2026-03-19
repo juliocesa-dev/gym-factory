@@ -1,4 +1,4 @@
-package com.gfc.gymfactory.dtos.response;
+package com.gfc.gymfactory.dtos.response.utils;
 
 import lombok.Builder;
 import lombok.Getter;

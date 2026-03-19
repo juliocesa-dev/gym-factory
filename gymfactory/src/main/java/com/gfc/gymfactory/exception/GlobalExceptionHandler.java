@@ -1,8 +1,7 @@
 package com.gfc.gymfactory.exception;
 
-import com.gfc.gymfactory.dtos.response.ErrorResponse;
+import com.gfc.gymfactory.dtos.response.utils.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

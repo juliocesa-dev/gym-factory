@@ -1,22 +1,23 @@
 package com.gfc.gymfactory.domain.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
 @MappedSuperclass
 @SQLDelete(sql = "UPDATE #{#entityName} SET deleted = true WHERE id = ?")
 @SQLRestriction("deleted = false")
-public abstract class BaseEntity {
+public abstract class BaseEntityUUID {
+
+    @Id
+    private UUID id;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -35,6 +36,7 @@ public abstract class BaseEntity {
         this.createdAt = LocalDateTime.now();
         this.active = true;
         this.deleted = false;
+        this.id = UUID.randomUUID();
     }
 
     @PreUpdate

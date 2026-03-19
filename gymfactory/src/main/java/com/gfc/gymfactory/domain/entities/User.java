@@ -13,13 +13,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
-
-    @Id
-    private UUID id;
+public class User extends BaseEntityUUID {
 
     @Column(nullable = false)
     private String name;
+
+    @Column(unique = true)
+    private String phoneNumber;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -29,11 +29,5 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-
-    @PrePersist
-    public void prePersist() {
-        this.id = UUID.randomUUID();
-    }
 
 }
