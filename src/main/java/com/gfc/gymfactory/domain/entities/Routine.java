@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,9 @@ public class Routine extends BaseEntity {
     private RoutineDifficulty difficulty;
 
     @Column(nullable = false)
+    private Boolean active;
+
+    @Column(nullable = false)
     private Boolean isTemplate;
 
     private LocalDate startDate;
@@ -55,4 +59,10 @@ public class Routine extends BaseEntity {
     @OneToMany(mappedBy = "routine", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<Workout> workouts = new ArrayList<>();
+
+    @Override
+    public void prePersist() {
+        super.prePersist();
+        this.active = true;
+    }
 }

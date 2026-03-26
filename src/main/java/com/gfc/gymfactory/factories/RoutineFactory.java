@@ -27,7 +27,6 @@ public class RoutineFactory {
             Workout clonedWorkout = Workout.builder()
                     .name(templateWorkout.getName())
                     .description(templateWorkout.getDescription())
-                    .isTemplate(false)
                     .routine(clone)
                     .build();
 

@@ -21,13 +21,9 @@ public abstract class BaseEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(nullable = false)
-    private Boolean active;
-
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
-        this.active = true;
     }
 
     @PreUpdate

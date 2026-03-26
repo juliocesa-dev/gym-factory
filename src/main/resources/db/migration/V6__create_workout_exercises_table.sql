@@ -7,7 +7,6 @@ CREATE TABLE workout_exercises (
                                    rest_seconds INTEGER,
                                    weight DOUBLE PRECISION,
                                    notes TEXT,
-                                   active BOOLEAN NOT NULL,
                                    created_at TIMESTAMP,
                                    updated_at TIMESTAMP,
 
