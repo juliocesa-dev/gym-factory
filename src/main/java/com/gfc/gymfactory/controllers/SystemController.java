@@ -17,7 +17,7 @@ public class SystemController {
 
     private final BuildProperties buildProperties;
 
-    @Value("${app.environment}")
+    @Value("${spring.profiles.active}")
     private String environment;
 
     @GetMapping("/info")

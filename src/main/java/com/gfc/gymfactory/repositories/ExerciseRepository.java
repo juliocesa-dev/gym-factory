@@ -18,7 +18,6 @@ public interface ExerciseRepository extends BaseRepository<Exercise, Long> {
 
     Page<Exercise> findAllByMuscleGroupAndCategory(MuscleGroup muscleGroup, ExerciseCategory category, Pageable pageable);
 
-//    @Query("SELECT e FROM Exercise e WHERE unaccent(LOWER(e.name)) LIKE unaccent(LOWER(CONCAT('%', :name, '%')))") - comentado temporariamente
-    @Query("SELECT e FROM Exercise e WHERE LOWER(e.name) LIKE LOWER(CONCAT('%', :name, '%'))")
+    @Query(value = "SELECT * FROM exercises WHERE unaccent(LOWER(name)) LIKE unaccent(LOWER(CONCAT('%', :name, '%')))", nativeQuery = true)
     Page<Exercise> findAllByNameContaining(@Param("name") String name, Pageable pageable);
 }

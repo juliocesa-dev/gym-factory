@@ -1,1 +1,1 @@
--- CREATE EXTENSION IF NOT EXISTS unaccent; - comentado temporariamente
+CREATE EXTENSION IF NOT EXISTS unaccent;
