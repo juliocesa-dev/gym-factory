@@ -59,6 +59,6 @@ public class AuthService {
 
     private AuthResponse buildAuthResponse(User user) {
         String token = securityUtils.generateToken(user);
-        return new AuthResponse(user.getName(), user.getEmail(), user.getPhoneNumber(), token);
+        return new AuthResponse(user.getId(), user.getName(), user.getEmail(), user.getPhoneNumber(), token);
     }
 }

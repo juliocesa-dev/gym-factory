@@ -3,6 +3,7 @@ package com.gfc.gymfactory.domain.entities;
 import com.gfc.gymfactory.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
 
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
+@SQLDelete(sql = "UPDATE users SET deleted = true WHERE id = ?")
 public class User extends BaseEntityUUID {
 
     @Column(nullable = false)

@@ -3,17 +3,12 @@ package com.gfc.gymfactory.domain.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
 @MappedSuperclass
-@SQLDelete(sql = "UPDATE #{#entityName} SET deleted = true WHERE id = ?")
-@SQLRestriction("deleted = false")
 public abstract class BaseEntity {
 
     @Id
@@ -29,14 +24,10 @@ public abstract class BaseEntity {
     @Column(nullable = false)
     private Boolean active;
 
-    @Column(nullable = false)
-    private Boolean deleted;
-
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
         this.active = true;
-        this.deleted = false;
     }
 
     @PreUpdate

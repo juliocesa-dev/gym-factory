@@ -49,13 +49,37 @@ CREATE TABLE IF NOT EXISTS users (
             updated_at
         ) VALUES (
             '550e8400-e29b-41d4-a716-446655440001',
-            'Luiz',
+            'Joao',
             '81993952119',
-            'luiz@gymfactory.com',
-            '$2a$10$EXAMPLEHASHEDPASSWORD',
-            'STUDENT',
+            'joao@gymfactory.com',
+            '$2a$10$oBlBh4rNuviFGU5Vh4LiVOYy2adubHCySEj0qyuVGY/nOmDCSOlia',
+            'INSTRUCTOR',
             true,
             false,
             NOW(),
             NOW()
         );
+
+        INSERT INTO users (
+            id,
+            name,
+            phone_number,
+            email,
+            password,
+            role,
+            active,
+            deleted,
+            created_at,
+            updated_at
+        ) VALUES (
+                     '550e8400-e29b-41d4-a716-446655440002',
+                     'Luiz',
+                     '81993952119',
+                     'luiz@gymfactory.com',
+                     '$2a$10$oBlBh4rNuviFGU5Vh4LiVOYy2adubHCySEj0qyuVGY/nOmDCSOlia',
+                     'STUDENT',
+                     true,
+                     false,
+                     NOW(),
+                     NOW()
+                 );

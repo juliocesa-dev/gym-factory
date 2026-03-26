@@ -1,5 +1,7 @@
 package com.gfc.gymfactory.domain.entities;
 
+import com.gfc.gymfactory.domain.enums.RoutineDifficulty;
+import com.gfc.gymfactory.domain.enums.RoutineGoal;
 import com.gfc.gymfactory.domain.enums.RoutineStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,6 +28,14 @@ public class Routine extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private RoutineStatus status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RoutineGoal goal;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RoutineDifficulty difficulty;
 
     @Column(nullable = false)
     private Boolean isTemplate;

@@ -6,7 +6,6 @@ CREATE TABLE workouts (
                           routine_id BIGINT,
                           instructor_id UUID,
                           active BOOLEAN NOT NULL,
-                          deleted BOOLEAN NOT NULL,
                           created_at TIMESTAMP,
                           updated_at TIMESTAMP,
 

@@ -8,7 +8,6 @@ CREATE TABLE workout_exercises (
                                    weight DOUBLE PRECISION,
                                    notes TEXT,
                                    active BOOLEAN NOT NULL,
-                                   deleted BOOLEAN NOT NULL,
                                    created_at TIMESTAMP,
                                    updated_at TIMESTAMP,
 

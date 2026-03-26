@@ -1,8 +1,6 @@
 package com.gfc.gymfactory.controllers;
 
-import com.gfc.gymfactory.domain.enums.ExerciseCategory;
-import com.gfc.gymfactory.domain.enums.MuscleGroup;
-import com.gfc.gymfactory.domain.enums.RoutineStatus;
+import com.gfc.gymfactory.domain.enums.*;
 import com.gfc.gymfactory.dtos.response.utils.MetadataResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,4 +40,19 @@ public class MetadataController {
                 .toList();
     }
 
+    @Operation(summary = "Objetivos de rotina")
+    @GetMapping("/routine-goals")
+    public List<MetadataResponse> routineGoals() {
+        return Arrays.stream(RoutineGoal.values())
+                .map(e -> new MetadataResponse(e.name(), e.getLabel()))
+                .toList();
+    }
+
+    @Operation(summary = "Dificuldades de rotina")
+    @GetMapping("/routine-difficulties")
+    public List<MetadataResponse> routineDifficulties() {
+        return Arrays.stream(RoutineDifficulty.values())
+                .map(e -> new MetadataResponse(e.name(), e.getLabel()))
+                .toList();
+    }
 }
