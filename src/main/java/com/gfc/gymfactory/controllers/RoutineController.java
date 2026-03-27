@@ -1,7 +1,7 @@
 package com.gfc.gymfactory.controllers;
 
 import com.gfc.gymfactory.domain.enums.RoutineDifficulty;
-import com.gfc.gymfactory.dtos.request.RoutineRequest;
+import com.gfc.gymfactory.dtos.request.RoutineRequestDto;
 import com.gfc.gymfactory.dtos.request.RoutineUpdateRequest;
 import com.gfc.gymfactory.dtos.response.RoutineResponse;
 import com.gfc.gymfactory.dtos.response.utils.PageResponse;
@@ -29,7 +29,7 @@ public class RoutineController {
     @Operation(summary = "Criar rotina")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public RoutineResponse create(@RequestBody @Valid RoutineRequest request) {
+    public RoutineResponse create(@RequestBody @Valid RoutineRequestDto request) {
         return routineService.create(request);
     }
 

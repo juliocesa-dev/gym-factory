@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public record RoutineRequest(
+public record RoutineRequestDto(
         @NotBlank String name,
         String description,
         @NotNull RoutineStatus status,
@@ -19,5 +19,6 @@ public record RoutineRequest(
         LocalDate startDate,
         LocalDate endDate,
         @NotNull UUID instructorId,
-        UUID studentId
+        UUID studentId,
+        Long routineRequestId // nullable
 ) {}

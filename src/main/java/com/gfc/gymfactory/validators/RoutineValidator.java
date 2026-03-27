@@ -1,8 +1,10 @@
 package com.gfc.gymfactory.validators;
 
+import com.gfc.gymfactory.domain.entities.RoutineRequest;
 import com.gfc.gymfactory.domain.entities.User;
 import com.gfc.gymfactory.domain.enums.Role;
-import com.gfc.gymfactory.dtos.request.RoutineRequest;
+import com.gfc.gymfactory.domain.enums.RoutineRequestStatus;
+import com.gfc.gymfactory.dtos.request.RoutineRequestDto;
 import com.gfc.gymfactory.dtos.request.RoutineUpdateRequest;
 import com.gfc.gymfactory.exception.ApiException;
 import org.springframework.http.HttpStatus;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RoutineValidator {
 
-    public void validate(RoutineRequest request) {
+    public void validate(RoutineRequestDto request) {
         if (request.isTemplate() && request.studentId() != null) {
             throw new ApiException(
                 "Rotina template não pode ter aluno associado",
@@ -52,6 +54,12 @@ public class RoutineValidator {
     public void throwIfNotStudent(User user) {
         if (user.getRole() != Role.STUDENT) {
             throw new ApiException("Usuário não é aluno", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public void throwIfAlreadyProcessed(RoutineRequest routineRequest) {
+        if (!routineRequest.getStatus().equals(RoutineRequestStatus.PENDING)) {
+            throw new ApiException("Solicitação já foi processada", HttpStatus.BAD_REQUEST);
         }
     }
 }

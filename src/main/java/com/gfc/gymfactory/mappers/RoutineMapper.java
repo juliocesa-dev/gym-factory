@@ -1,7 +1,7 @@
 package com.gfc.gymfactory.mappers;
 
 import com.gfc.gymfactory.domain.entities.Routine;
-import com.gfc.gymfactory.dtos.request.RoutineRequest;
+import com.gfc.gymfactory.dtos.request.RoutineRequestDto;
 import com.gfc.gymfactory.dtos.request.RoutineUpdateRequest;
 import com.gfc.gymfactory.dtos.response.RoutineResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ public class RoutineMapper {
 
     private final UserMapper userMapper;
 
-    public Routine toEntity(RoutineRequest request) {
+    public Routine toEntity(RoutineRequestDto request) {
         return Routine.builder()
                 .name(request.name())
                 .description(request.description())

@@ -1,9 +1,12 @@
 package com.gfc.gymfactory.services;
 
 import com.gfc.gymfactory.domain.entities.Routine;
+import com.gfc.gymfactory.domain.entities.RoutineRequest;
 import com.gfc.gymfactory.domain.entities.User;
 import com.gfc.gymfactory.domain.enums.RoutineDifficulty;
-import com.gfc.gymfactory.dtos.request.RoutineRequest;
+import com.gfc.gymfactory.domain.enums.RoutineRequestStatus;
+import com.gfc.gymfactory.domain.enums.RoutineStatus;
+import com.gfc.gymfactory.dtos.request.RoutineRequestDto;
 import com.gfc.gymfactory.dtos.request.RoutineUpdateRequest;
 import com.gfc.gymfactory.dtos.response.RoutineResponse;
 import com.gfc.gymfactory.dtos.response.utils.PageResponse;
@@ -11,6 +14,7 @@ import com.gfc.gymfactory.exception.ApiException;
 import com.gfc.gymfactory.factories.RoutineFactory;
 import com.gfc.gymfactory.mappers.RoutineMapper;
 import com.gfc.gymfactory.repositories.RoutineRepository;
+import com.gfc.gymfactory.repositories.RoutineRequestRepository;
 import com.gfc.gymfactory.repositories.UserRepository;
 import com.gfc.gymfactory.validators.RoutineValidator;
 import lombok.RequiredArgsConstructor;
@@ -30,9 +34,10 @@ public class RoutineService {
     private final RoutineMapper routineMapper;
     private final RoutineValidator routineValidator;
     private final RoutineFactory routineFactory;
+    private final RoutineRequestRepository routineRequestRepository;
 
     @Transactional
-    public RoutineResponse create(RoutineRequest request) {
+    public RoutineResponse create(RoutineRequestDto request) {
         routineValidator.validate(request);
 
         User instructor = userRepository.findByIdOrThrow(request.instructorId(), "Instrutor não encontrado");
@@ -42,19 +47,37 @@ public class RoutineService {
         routine.setInstructor(instructor);
 
         if (request.studentId() != null) {
-            User student = userRepository.findByIdOrThrow(request.studentId(), "Aluno não encontrado");
-            routineValidator.throwIfNotStudent(student);
-            routine.setStudent(student);
+            assignStudent(routine, request.studentId());
         }
 
-        return routineMapper.toResponse(routineRepository.save(routine));
+        Routine savedRoutine = routineRepository.save(routine);
+
+        if (request.routineRequestId() != null) {
+            acceptRoutineRequest(request.routineRequestId(), savedRoutine);
+        }
+
+        return routineMapper.toResponse(savedRoutine);
+    }
+
+    private void assignStudent(Routine routine, UUID studentId) {
+        User student = userRepository.findByIdOrThrow(studentId, "Aluno não encontrado");
+        routineValidator.throwIfNotStudent(student);
+        routine.setStudent(student);
+        routine.setStatus(RoutineStatus.DONE);
+    }
+
+    private void acceptRoutineRequest(Long routineRequestId, Routine routine) {
+        RoutineRequest routineRequest = routineRequestRepository
+                .findByIdOrThrow(routineRequestId, "Solicitação não encontrada");
+        routineValidator.throwIfAlreadyProcessed(routineRequest);
+        routineRequest.setStatus(RoutineRequestStatus.ACCEPTED);
+        routineRequest.setRoutine(routine);
+        routineRequestRepository.save(routineRequest);
     }
 
     @Transactional(readOnly = true)
     public RoutineResponse findById(Long id) {
-        return routineMapper.toResponse(
-                routineRepository.findByIdOrThrow(id, "Rotina não encontrada")
-        );
+        return routineMapper.toResponse(routineRepository.findByIdOrThrow(id, "Rotina não encontrada"));
     }
 
     @Transactional(readOnly = true)
