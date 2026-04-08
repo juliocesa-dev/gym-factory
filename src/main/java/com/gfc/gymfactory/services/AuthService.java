@@ -2,8 +2,10 @@ package com.gfc.gymfactory.services;
 
 import com.gfc.gymfactory.config.security.SecurityUtils;
 import com.gfc.gymfactory.domain.entities.User;
+import com.gfc.gymfactory.domain.enums.Role;
 import com.gfc.gymfactory.dtos.request.LoginRequest;
 import com.gfc.gymfactory.dtos.request.RegisterRequest;
+import com.gfc.gymfactory.dtos.request.RegisterStaffRequest;
 import com.gfc.gymfactory.dtos.response.AuthResponse;
 import com.gfc.gymfactory.dtos.response.UserResponse;
 import com.gfc.gymfactory.exception.ApiException;
@@ -37,10 +39,14 @@ public class AuthService {
         return buildAuthResponse(user);
     }
 
-    public UserResponse registerInstructor(RegisterRequest request) {
+    public UserResponse registerStaff(RegisterStaffRequest request) {
+        if (request.role() != Role.INSTRUCTOR && request.role() != Role.RECEPTIONIST) {
+            throw new ApiException("Role inválida. Use INSTRUCTOR ou RECEPTIONIST", HttpStatus.BAD_REQUEST);
+        }
+
         userValidator.throwIfEmailExists(request.email());
 
-        User user = userFactory.createForInstructorRegister(request);
+        User user = userFactory.createForStaffRegister(request);
 
         userRepository.save(user);
 
@@ -52,6 +58,10 @@ public class AuthService {
 
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             throw new ApiException("Credenciais inválidas", HttpStatus.UNAUTHORIZED);
+        }
+
+        if (!user.getActive()) {
+            throw new ApiException("Usuário desabilitado", HttpStatus.FORBIDDEN);
         }
 
         return buildAuthResponse(user);

@@ -3,6 +3,7 @@ package com.gfc.gymfactory.factories;
 import com.gfc.gymfactory.domain.entities.User;
 import com.gfc.gymfactory.domain.enums.Role;
 import com.gfc.gymfactory.dtos.request.RegisterRequest;
+import com.gfc.gymfactory.dtos.request.RegisterStaffRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -23,13 +24,13 @@ public class UserFactory {
                 .build();
     }
 
-    public User createForInstructorRegister(RegisterRequest request){
+    public User createForStaffRegister(RegisterStaffRequest request){
         return User.builder()
                 .name(request.name())
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
                 .phoneNumber(request.phoneNumber())
-                .role(Role.INSTRUCTOR)
+                .role(request.role())
                 .build();
     }
 

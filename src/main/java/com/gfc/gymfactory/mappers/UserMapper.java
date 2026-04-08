@@ -11,7 +11,10 @@ public class UserMapper {
                 .id(user.getId())
                 .name(user.getName())
                 .phoneNumber(user.getPhoneNumber())
-                .email(user.getEmail()).build();
+                .email(user.getEmail())
+                .role(user.getRole())
+                .active(user.getActive())
+                .build();
     }
 
 }

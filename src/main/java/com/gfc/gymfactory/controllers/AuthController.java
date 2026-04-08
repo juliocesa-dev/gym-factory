@@ -2,6 +2,7 @@ package com.gfc.gymfactory.controllers;
 
 import com.gfc.gymfactory.dtos.request.LoginRequest;
 import com.gfc.gymfactory.dtos.request.RegisterRequest;
+import com.gfc.gymfactory.dtos.request.RegisterStaffRequest;
 import com.gfc.gymfactory.dtos.response.AuthResponse;
 import com.gfc.gymfactory.dtos.response.UserResponse;
 import com.gfc.gymfactory.services.AuthService;
@@ -24,11 +25,11 @@ public class AuthController {
         return authService.register(request);
     }
 
-    @PostMapping("/register-instructor")
+    @PostMapping("/register-staff")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ADMIN')")
-    public UserResponse registerInstructor(@RequestBody @Valid RegisterRequest request) {
-        return authService.registerInstructor(request);
+    public UserResponse registerStaff(@RequestBody @Valid RegisterStaffRequest request) {
+        return authService.registerStaff(request);
     }
 
     @PostMapping("/login")

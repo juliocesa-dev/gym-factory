@@ -1,10 +1,14 @@
 package com.gfc.gymfactory.repositories;
 
+import com.gfc.gymfactory.domain.enums.Role;
 import com.gfc.gymfactory.exception.ApiException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import com.gfc.gymfactory.domain.entities.User;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,4 +22,6 @@ public interface UserRepository extends BaseRepository<User, UUID> {
     Optional<User> findByEmail(String email);
 
     boolean existsByEmail(String email);
+
+    Page<User> findAllByRoleInAndActive(Collection<Role> roles, boolean active, Pageable pageable);
 }
