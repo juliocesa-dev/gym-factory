@@ -21,7 +21,7 @@ public class SecurityUtils {
     private long expiration;
 
     public String generateToken(User user) {
-        return "Bearer " + Jwts.builder()
+        return Jwts.builder()
                 .subject(user.getEmail())
                 .claim("userId", user.getId().toString())
                 .claim("role", user.getRole().name())
