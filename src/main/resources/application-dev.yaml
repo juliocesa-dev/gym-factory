@@ -10,3 +10,7 @@ springdoc:
     enabled: true
   swagger-ui:
     enabled: true
+
+resend:
+  api-key: ${RESEND_API_KEY}
+  from: onboarding@resend.dev

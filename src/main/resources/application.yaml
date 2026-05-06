@@ -26,3 +26,7 @@ server:
 jwt:
   secret: ${JWT_SECRET}
   expiration: 86400000
+
+resend:
+  api-key: ${RESEND_API_KEY}
+  from: onboarding@resend.dev
