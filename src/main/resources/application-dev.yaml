@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/gymfactory
@@ -14,3 +17,6 @@ springdoc:
 resend:
   api-key: ${RESEND_API_KEY}
   from: onboarding@resend.dev
+
+cors:
+  allowed-origins: http://localhost:5173
