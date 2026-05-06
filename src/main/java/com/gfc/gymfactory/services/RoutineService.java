@@ -8,6 +8,7 @@ import com.gfc.gymfactory.domain.enums.RoutineRequestStatus;
 import com.gfc.gymfactory.domain.enums.RoutineStatus;
 import com.gfc.gymfactory.dtos.request.RoutineRequestDto;
 import com.gfc.gymfactory.dtos.request.RoutineUpdateRequest;
+import com.gfc.gymfactory.dtos.response.RoutineDetailResponse;
 import com.gfc.gymfactory.dtos.response.RoutineResponse;
 import com.gfc.gymfactory.dtos.response.utils.PageResponse;
 import com.gfc.gymfactory.exception.ApiException;
@@ -78,6 +79,11 @@ public class RoutineService {
     @Transactional(readOnly = true)
     public RoutineResponse findById(Long id) {
         return routineMapper.toResponse(routineRepository.findByIdOrThrow(id, "Rotina não encontrada"));
+    }
+
+    @Transactional(readOnly = true)
+    public RoutineDetailResponse findDetailById(Long id) {
+        return routineMapper.toDetailResponse(routineRepository.findByIdOrThrow(id, "Rotina não encontrada"));
     }
 
     @Transactional(readOnly = true)

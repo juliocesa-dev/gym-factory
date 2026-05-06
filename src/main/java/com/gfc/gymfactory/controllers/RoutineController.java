@@ -3,6 +3,7 @@ package com.gfc.gymfactory.controllers;
 import com.gfc.gymfactory.domain.enums.RoutineDifficulty;
 import com.gfc.gymfactory.dtos.request.RoutineRequestDto;
 import com.gfc.gymfactory.dtos.request.RoutineUpdateRequest;
+import com.gfc.gymfactory.dtos.response.RoutineDetailResponse;
 import com.gfc.gymfactory.dtos.response.RoutineResponse;
 import com.gfc.gymfactory.dtos.response.utils.PageResponse;
 import com.gfc.gymfactory.services.RoutineService;
@@ -43,6 +44,12 @@ public class RoutineController {
     @GetMapping("/{id}")
     public RoutineResponse findById(@PathVariable Long id) {
         return routineService.findById(id);
+    }
+
+    @Operation(summary = "Buscar rotina completa com workouts e exercícios")
+    @GetMapping("/{id}/detail")
+    public RoutineDetailResponse findDetailById(@PathVariable Long id) {
+        return routineService.findDetailById(id);
     }
 
     @Operation(summary = "Listar rotinas de um aluno")

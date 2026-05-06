@@ -3,6 +3,7 @@ package com.gfc.gymfactory.mappers;
 import com.gfc.gymfactory.domain.entities.Routine;
 import com.gfc.gymfactory.dtos.request.RoutineRequestDto;
 import com.gfc.gymfactory.dtos.request.RoutineUpdateRequest;
+import com.gfc.gymfactory.dtos.response.RoutineDetailResponse;
 import com.gfc.gymfactory.dtos.response.RoutineResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class RoutineMapper {
 
     private final UserMapper userMapper;
+    private final WorkoutMapper workoutMapper;
 
     public Routine toEntity(RoutineRequestDto request) {
         return Routine.builder()
@@ -42,6 +44,26 @@ public class RoutineMapper {
                         ? userMapper.toUserResponse(routine.getStudent())
                         : null,
                 routine.getCreatedAt()
+        );
+    }
+
+    public RoutineDetailResponse toDetailResponse(Routine routine) {
+        return new RoutineDetailResponse(
+                routine.getId(),
+                routine.getName(),
+                routine.getDescription(),
+                routine.getStatus(),
+                routine.getGoal(),
+                routine.getDifficulty(),
+                routine.getIsTemplate(),
+                routine.getStartDate(),
+                routine.getEndDate(),
+                userMapper.toUserResponse(routine.getInstructor()),
+                routine.getStudent() != null
+                        ? userMapper.toUserResponse(routine.getStudent())
+                        : null,
+                routine.getCreatedAt(),
+                routine.getWorkouts().stream().map(workoutMapper::toDetailResponse).toList()
         );
     }
 
